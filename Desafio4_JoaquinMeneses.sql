@@ -66,14 +66,13 @@ ORDER BY
     p.nombre;
 
 #4. Crea las tablas correspondientes respetando los nombres, tipos, claves primarias y foráneas y tipos de datos.
--- Crear la tabla Preguntas
+
 CREATE TABLE Preguntas (
     id INTEGER PRIMARY KEY,
     pregunta VARCHAR(255) NOT NULL,
     respuesta_correcta VARCHAR(255)
 );
 
--- Crear la tabla Respuestas
 CREATE TABLE Respuestas (
     id INTEGER PRIMARY KEY,
     respuesta VARCHAR(255) NOT NULL,
@@ -83,7 +82,6 @@ CREATE TABLE Respuestas (
     FOREIGN KEY (pregunta_id) REFERENCES Preguntas(id)
 );
 
--- Crear la tabla Usuarios
 CREATE TABLE Usuarios (
     id INTEGER PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
@@ -130,7 +128,7 @@ VALUES
 (21, 'America, Asia, Oceania', 1, 5),
 (22, 'Paso', 2, 5),
 (23, 'America, Asia, Oceania, Africa, Antartida', 3, 5),
-(24, 'Chile, Argentina, Brasil', 4, 5),  -- Corregido "Argntina"
+(24, 'Chile, Argentina, Brasil', 4, 5),
 (25, 'America, Asia, Oceania, Africa, Oceania', 5, 5);
 
 
@@ -159,6 +157,10 @@ GROUP BY p.id
 ORDER BY p.id;
 
 #8. Implementa un borrado en cascada de las respuestas al borrar un usuario. Prueba la implementación borrando el primer usuario.
+ALTER TABLE respuestas
+ADD CONSTRAINT fk_usuario
+FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+ON DELETE CASCADE;
 
 #9. Crea una restricción que impida insertar usuarios menores de 18 años en la base de datos.
 ALTER TABLE Usuarios
@@ -167,6 +169,7 @@ ADD CONSTRAINT chk_edad CHECK (edad >= 18);
 #10. Altera la tabla existente de usuarios agregando el campo email. Debe tener la restricción de ser único.
 ALTER TABLE usuarios
 ADD COLUMN email VARCHAR(255) UNIQUE;
+
 
 
 
